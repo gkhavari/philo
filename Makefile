@@ -4,7 +4,8 @@ SRCS    =	main.c \
 			input_check.c \
 			init.c \
 			simulation.c \
-			utils.c
+			utils.c \
+			utils_input_check.c
 
 OBJS    = $(SRCS:.c=.o)
 

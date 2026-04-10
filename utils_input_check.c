@@ -12,35 +12,55 @@
 
 #include "philo.h"
 
-/*returns time in millisecond*/
-long long	get_time(void)
+long	ft_atoi(const char *str)
 {
-	struct timeval	tv;
+	size_t	i;
+	int		sign;
+	long	result;
 
-	gettimeofday(&tv, NULL);
-	return ((long long)tv.tv_sec * 1000 + (long long) tv.tv_usec / 1000);
+	i = 0;
+	sign = 1;
+	result = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		if (result > INT_MAX || (sign == -1 && result > INT_MAX - 1))
+			return ((long)INT_MAX + 1);
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (result * sign);
 }
 
-void	free_all(t_data *data)
+int	ft_isdigit_str(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str || !*str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 
-	if (data->forks)
-	{
-		i = 0;
-		while (i < data->num_philos)
-		{
-			pthread_mutex_destroy(&data->forks[i]);
-			i++;
-		}
-		free (data->forks);
-		data->forks = NULL;
-	}
-	pthread_mutex_destroy(&data->writing);
-	pthread_mutex_destroy(&data->meal_check);
-	if (data->philos)
-	{
-		free(data->philos);
-		data->philos = NULL;
-	}
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
