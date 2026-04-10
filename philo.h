@@ -24,6 +24,7 @@
 # define HELP_FLAG "--help"
 # define TRUE 1
 # define FALSE 0
+# define ATOI_ERROR -1
 
 typedef struct s_arg_info
 {
@@ -73,7 +74,7 @@ void		init_philos(t_data *data);
 void		start_simulation(t_data *data);
 long long	get_time(void);
 void		free_all(t_data *data);
-long		ft_atoi(const char *str);
+int			ft_atoi_simple(const char *str);
 int			ft_isdigit_str(const char *str);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit_str(const char *str);

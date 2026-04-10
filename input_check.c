@@ -14,8 +14,8 @@
 
 static int	check_single_arg(const char *arg, const char *name)
 {
-	long	val;
-	int		error;
+	int	val;
+	int	error;
 
 	error = 0;
 	if (!ft_isdigit_str(arg))
@@ -25,8 +25,8 @@ static int	check_single_arg(const char *arg, const char *name)
 	}
 	else
 	{
-		val = ft_atoi(arg);
-		if (val <= 0 || val > INT_MAX)
+		val = ft_atoi_simple(arg);
+		if (val == ATOI_ERROR)
 		{
 			printf("Error: invalid value for %s (must be > 0 and <= INT_MAX)\n",
 				name);
@@ -36,7 +36,7 @@ static int	check_single_arg(const char *arg, const char *name)
 	return (error);
 }
 
-void	print_usage(const t_arg_info *g_args)
+static void	print_usage(const t_arg_info *g_args)
 {
 	printf("Usage: ./philo %s %s %s %s [%s]\n",
 		g_args[ARG_NUM_PHILOS].name,

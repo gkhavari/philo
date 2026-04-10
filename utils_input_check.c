@@ -12,31 +12,25 @@
 
 #include "philo.h"
 
-long	ft_atoi(const char *str)
+int	ft_atoi_simple(const char *str)
 {
 	size_t	i;
-	int		sign;
-	long	result;
+	int	result;
+	int		digit;
 
+	if (!str)
+		return (ATOI_ERROR);
 	i = 0;
-	sign = 1;
 	result = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (result > INT_MAX || (sign == -1 && result > INT_MAX - 1))
-			return ((long)INT_MAX + 1);
-		result = result * 10 + (str[i] - '0');
+		digit = str[i] - '0';
+		if (result > (INT_MAX - digit) / 10)
+			return (ATOI_ERROR);
+		result = result * 10 + digit;
 		i++;
 	}
-	return (result * sign);
+	return (result);
 }
 
 int	ft_isdigit_str(const char *str)
@@ -45,14 +39,14 @@ int	ft_isdigit_str(const char *str)
 
 	i = 0;
 	if (!str || !*str)
-		return (0);
+		return (FALSE);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (0);
+			return (FALSE);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
