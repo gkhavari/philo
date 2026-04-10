@@ -17,13 +17,16 @@ void	init_data(t_data *data, int argc, char **argv)
 	size_t	i;
 
 	i = 0;
-	data->num_philos = atoi(argv[1]);
-	data->t_die = atoi(argv[2]);
-	data->t_eat = atoi(argv[3]);
-	data->t_sleep = atoi(argv[4]);
+	data->num_philos = (size_t)ft_atoi_simple(argv[1]);
+	data->t_die = (size_t)ft_atoi_simple(argv[2]);
+	data->t_eat = (size_t)ft_atoi_simple(argv[3]);
+	data->t_sleep = (size_t)ft_atoi_simple(argv[4]);
 	if (argc == 6)
-		data->must_eat = atoi(argv[5]);
-	data->start_time = 0;
+		data->must_eat = (size_t)ft_atoi_simple(argv[5]);
+	else
+		data->must_eat = 0;
+	data->start_time = get_time();
+	data->someone_died = FALSE;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
 	if (!data->forks)
 		return ;
@@ -50,6 +53,8 @@ void	init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].left_fork = i;
 		data->philos[i].right_fork = (i + 1) % data->num_philos;
+		data->philos[i].last_meal = data->start_time;
+		data->philos[i].meals_eaten = 0;
 		data->philos[i].data = data;
 		i++;
 	}

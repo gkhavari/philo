@@ -16,15 +16,21 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <string.h> //für memset
-# include <stdio.h> // für printf
+# include <string.h>
+# include <stdio.h>
 # include <sys/time.h>
+# include <stdatomic.h>
 
 # define INT_MAX 2147483647
 # define HELP_FLAG "--help"
 # define TRUE 1
 # define FALSE 0
 # define ATOI_ERROR -1
+# define FORK_MSG "has taken a fork"
+# define EAT_MSG "is eating"
+# define SLEEP_MSG "is sleeping"
+# define THINK_MSG "is thinking"
+# define DIE_MSG "died"
 
 typedef struct s_arg_info
 {
@@ -46,12 +52,12 @@ typedef struct s_philo	t_philo;
 typedef struct s_data
 {
 	size_t			num_philos;
-	int				t_die;
-	int				t_eat;
-	int				t_sleep;
-	int				must_eat;
+	size_t			t_die;
+	size_t			t_eat;
+	size_t			t_sleep;
+	size_t			must_eat;
 	long long		start_time;
-	int				someone_died;
+	atomic_int		someone_died;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	writing;
 	pthread_mutex_t	meal_check;
@@ -60,12 +66,13 @@ typedef struct s_data
 
 typedef struct s_philo
 {
-	int			id;
-	int			left_fork;
-	int			right_fork;
-	long long	last_meal;
-	int			meals_eaten;
-	t_data		*data;
+	pthread_t		thread;
+	int				id;
+	int				left_fork;
+	int				right_fork;
+	atomic_size_t	last_meal;
+	atomic_size_t	meals_eaten;
+	t_data			*data;
 }	t_philo;
 
 int			input_check(int argc, char **argv);
@@ -78,5 +85,12 @@ int			ft_atoi_simple(const char *str);
 int			ft_isdigit_str(const char *str);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit_str(const char *str);
+void		output_take_fork(t_data *data, long long time, int philo);
+void		output_eat(t_data *data, long long time, int philo);
+void		output_sleep(t_data *data, long long time, int philo);
+void		output_think(t_data *data, long long time, int philo);
+void	output_die(t_philo *philo);
+void	print_status(t_philo *philo, char *msg);
+
 
 #endif

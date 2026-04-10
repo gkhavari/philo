@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	init_data(&data, argc, argv);
 	if (!data.forks || !data.philos)
 	{
-		perror("Malloc error");
+		printf("Error: Malloc failure\n");
 		free_all(&data);
 		return (EXIT_FAILURE);
 	}

@@ -4,6 +4,7 @@ SRCS    =	main.c \
 			input_check.c \
 			init.c \
 			simulation.c \
+			output.c \
 			utils.c \
 			utils_input_check.c
 

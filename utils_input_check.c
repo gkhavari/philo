@@ -15,7 +15,7 @@
 int	ft_atoi_simple(const char *str)
 {
 	size_t	i;
-	int	result;
+	int		result;
 	int		digit;
 
 	if (!str)
