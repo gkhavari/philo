@@ -1,22 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   simulation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhavari <gkhavari@student.42vienna.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/10 16:25:16 by gkhavari          #+#    #+#             */
+/*   Updated: 2026/04/10 16:25:18 by gkhavari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-static void *philo_routine(void *arg)
+static void	*philo_routine(void *arg)
 {
-	t_philo *philo;
-	
+	t_philo		*philo;
+	long long	now;
+	long long	time_since_last_meal;
+
 	philo = (t_philo *)arg;
 	while (!philo->data->someone_died)
 	{
-		long long now = get_time();
-		long long time_since_last_meal = now - philo->last_meal;
-
+		now = get_time();
+		time_since_last_meal = now - philo->last_meal;
 		if (time_since_last_meal >= philo->data->t_die)
 		{
 			pthread_mutex_lock(&philo->data->writing);
 			printf("%lld %d died\n", now - philo->data->start_time, philo->id);
 			pthread_mutex_unlock(&philo->data->writing);
 			philo->data->someone_died = 1;
-			break;
+			break ;
 		}
 	}
 	return (NULL);
@@ -24,8 +37,8 @@ static void *philo_routine(void *arg)
 
 void	start_simulation(t_data *data)
 {
-	pthread_t threads[data->num_philos];
-	size_t i;
+	pthread_t	threads[data->num_philos];
+	size_t		i;
 
 	data->start_time = get_time();
 	i = 0;

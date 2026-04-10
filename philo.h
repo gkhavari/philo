@@ -20,7 +20,6 @@
 # include <stdio.h> // für printf
 # include <sys/time.h>
 
-
 # define INT_MAX 2147483647
 # define HELP_FLAG "--help"
 # define TRUE 1
@@ -28,8 +27,8 @@
 
 typedef struct s_arg_info
 {
-	const char *name;
-} t_arg_info;
+	const char	*name;
+}	t_arg_info;
 
 enum	e_args
 {
@@ -41,39 +40,38 @@ enum	e_args
 	ARG_COUNT
 };
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_data
 {
-	size_t			num_philos;     // Number of philosophers
-	int				t_die;     // Max time without eating
-	int				t_eat;     // Time spent eating
-	int				t_sleep;   // Time spent sleeping
-	int				must_eat;       // Optional: number of meals
-	long long		start_time;      // Simulation start timestamp
+	size_t			num_philos;
+	int				t_die;
+	int				t_eat;
+	int				t_sleep;
+	int				must_eat;
+	long long		start_time;
 	int				someone_died;
-	pthread_mutex_t	*forks;          // Array of mutexes for forks
-	pthread_mutex_t	writing;         // Mutex for printing
-	pthread_mutex_t	meal_check;      // Mutex for accessing last_meal
-	t_philo			*philos;        // Array of philosopher structs
-} t_data;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	writing;
+	pthread_mutex_t	meal_check;
+	t_philo			*philos;
+}	t_data;
 
 typedef struct s_philo
 {
-	int			id;             // Philosopher ID
-	int			left_fork;      // Index of left fork
-	int			right_fork;     // Index of right fork
-	long long	last_meal;      // Timestamp of last meal
-	int			meals_eaten;    // Count of meals eaten
-	t_data		*data;          // Pointer to shared data
-} t_philo;
+	int			id;
+	int			left_fork;
+	int			right_fork;
+	long long	last_meal;
+	int			meals_eaten;
+	t_data		*data;
+}	t_philo;
 
 int			input_check(int argc, char **argv);
-void 		init_data(t_data *data, int argc, char **argv);
-void 		init_philos(t_data *data);
+void		init_data(t_data *data, int argc, char **argv);
+void		init_philos(t_data *data);
 void		start_simulation(t_data *data);
 long long	get_time(void);
 void		free_all(t_data *data);
-
 
 #endif

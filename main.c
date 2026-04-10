@@ -28,7 +28,6 @@ int	main(int argc, char **argv)
 	}
 	init_philos(&data);
 	start_simulation(&data);
-
 	free_all(&data);
 	return (EXIT_SUCCESS);
 }

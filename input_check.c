@@ -81,7 +81,8 @@ static int	check_single_arg(const char *arg, const char *name)
 		val = ft_atoi(arg);
 		if (val <= 0 || val > INT_MAX)
 		{
-			printf("Error: invalid value for %s (must be > 0 and <= INT_MAX)\n", name);
+			printf("Error: invalid value for %s (must be > 0 and <= INT_MAX)\n",
+				name);
 			error = 1;
 		}
 	}
@@ -96,19 +97,19 @@ void	print_usage(const t_arg_info *g_args)
 		g_args[ARG_TIME_EAT].name,
 		g_args[ARG_TIME_SLEEP].name,
 		g_args[ARG_NUM_EAT].name
-	);
+		);
 }
 
 int	input_check(int argc, char **argv)
 {
-	int	error;
-	int	i;
-	static const t_arg_info g_args[ARG_COUNT] = {
+	int						error;
+	int						i;
+	static const t_arg_info	g_args[ARG_COUNT] = {
 	[ARG_NUM_PHILOS] = {"number_of_philosophers"},
-	[ARG_TIME_DIE]   = {"time_to_die"},
-	[ARG_TIME_EAT]   = {"time_to_eat"},
+	[ARG_TIME_DIE] = {"time_to_die"},
+	[ARG_TIME_EAT] = {"time_to_eat"},
 	[ARG_TIME_SLEEP] = {"time_to_sleep"},
-	[ARG_NUM_EAT]    = {"number_of_times_each_philosopher_must_eat"}
+	[ARG_NUM_EAT] = {"number_of_times_each_philosopher_must_eat"}
 	};
 
 	error = 0;

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhavari <gkhavari@student.42vienna.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/10 16:16:47 by gkhavari          #+#    #+#             */
+/*   Updated: 2026/04/10 16:16:49 by gkhavari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void init_data(t_data *data, int argc, char **argv)
+void	init_data(t_data *data, int argc, char **argv)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	data->num_philos = atoi(argv[1]);
@@ -14,7 +26,7 @@ void init_data(t_data *data, int argc, char **argv)
 	data->start_time = 0;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
 	if (!data->forks)
-        return ;
+		return ;
 	while (i < data->num_philos)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
@@ -24,21 +36,21 @@ void init_data(t_data *data, int argc, char **argv)
 	pthread_mutex_init(&data->meal_check, NULL);
 	data->philos = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->philos)
-        return ;
+		return ;
 }
 
-void init_philos(t_data *data)
+void	init_philos(t_data *data)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	memset(data->philos, 0, sizeof(t_philo) * data->num_philos);
-    while (i < data->num_philos)
-    {
-        data->philos[i].id = i + 1;
-        data->philos[i].left_fork = i;
-        data->philos[i].right_fork = (i + 1) % data->num_philos;
-        data->philos[i].data = data;
+	while (i < data->num_philos)
+	{
+		data->philos[i].id = i + 1;
+		data->philos[i].left_fork = i;
+		data->philos[i].right_fork = (i + 1) % data->num_philos;
+		data->philos[i].data = data;
 		i++;
-    }
+	}
 }
