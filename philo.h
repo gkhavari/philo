@@ -22,6 +22,24 @@
 
 
 # define INT_MAX 2147483647
+# define HELP_FLAG "--help"
+# define TRUE 1
+# define FALSE 0
+
+typedef struct s_arg_info
+{
+	const char *name;
+} t_arg_info;
+
+enum	e_args
+{
+	ARG_NUM_PHILOS = 1,
+	ARG_TIME_DIE,
+	ARG_TIME_EAT,
+	ARG_TIME_SLEEP,
+	ARG_NUM_EAT,
+	ARG_COUNT
+};
 
 typedef struct s_philo t_philo;
 
@@ -33,6 +51,7 @@ typedef struct s_data
 	int				t_sleep;   // Time spent sleeping
 	int				must_eat;       // Optional: number of meals
 	long long		start_time;      // Simulation start timestamp
+	int				someone_died;
 	pthread_mutex_t	*forks;          // Array of mutexes for forks
 	pthread_mutex_t	writing;         // Mutex for printing
 	pthread_mutex_t	meal_check;      // Mutex for accessing last_meal
@@ -45,7 +64,6 @@ typedef struct s_philo
 	int			left_fork;      // Index of left fork
 	int			right_fork;     // Index of right fork
 	long long	last_meal;      // Timestamp of last meal
-	int			is_dead;
 	int			meals_eaten;    // Count of meals eaten
 	t_data		*data;          // Pointer to shared data
 } t_philo;

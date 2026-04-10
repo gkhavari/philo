@@ -55,6 +55,16 @@ static int	ft_isdigit_str(const char *str)
 	return (1);
 }
 
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
 static int	check_single_arg(const char *arg, const char *name)
 {
 	long	val;
@@ -71,32 +81,49 @@ static int	check_single_arg(const char *arg, const char *name)
 		val = ft_atoi(arg);
 		if (val <= 0 || val > INT_MAX)
 		{
-			printf("Error: %s must be > 0 and <= INT_MAX\n", name);
+			printf("Error: invalid value for %s (must be > 0 and <= INT_MAX)\n", name);
 			error = 1;
 		}
 	}
 	return (error);
 }
 
+void	print_usage(const t_arg_info *g_args)
+{
+	printf("Usage: ./philo %s %s %s %s [%s]\n",
+		g_args[ARG_NUM_PHILOS].name,
+		g_args[ARG_TIME_DIE].name,
+		g_args[ARG_TIME_EAT].name,
+		g_args[ARG_TIME_SLEEP].name,
+		g_args[ARG_NUM_EAT].name
+	);
+}
+
 int	input_check(int argc, char **argv)
 {
 	int	error;
+	int	i;
+	static const t_arg_info g_args[ARG_COUNT] = {
+	[ARG_NUM_PHILOS] = {"number_of_philosophers"},
+	[ARG_TIME_DIE]   = {"time_to_die"},
+	[ARG_TIME_EAT]   = {"time_to_eat"},
+	[ARG_TIME_SLEEP] = {"time_to_sleep"},
+	[ARG_NUM_EAT]    = {"number_of_times_each_philosopher_must_eat"}
+	};
 
 	error = 0;
 	if (argc != 5 && argc != 6)
 	{
-		printf("Error: wrong number of arguments\n");
-		printf("Usage: ./philo number_of_philosophers time_to_die ");
-		printf("time_to_eat time_to_sleep ");
-		printf("[number_of_times_each_philosopher_must_eat]\n");
+		if (argc > 1 && ft_strcmp(argv[1], HELP_FLAG))
+			printf("Error: wrong number of arguments\n");
+		print_usage(g_args);
 		return (1);
 	}
-	error += check_single_arg(argv[1], "number_of_philosophers");
-	error += check_single_arg(argv[2], "time_to_die");
-	error += check_single_arg(argv[3], "time_to_eat");
-	error += check_single_arg(argv[4], "time_to_sleep");
-	if (argc == 6)
-		error += check_single_arg(argv[5],
-				"number_of_times_each_philosopher_must_eat");
+	i = ARG_NUM_PHILOS;
+	while (i < argc)
+	{
+		error += check_single_arg(argv[i], g_args[i].name);
+		i++;
+	}
 	return (error);
 }

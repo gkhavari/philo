@@ -17,18 +17,18 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (input_check(argc, argv))
-		return (1);
+		return (EXIT_FAILURE);
 	memset(&data, 0, sizeof(data));
 	init_data(&data, argc, argv);
 	if (!data.forks || !data.philos)
 	{
-		printf("Malloc error");
+		perror("Malloc error");
 		free_all(&data);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	init_philos(&data);
 	start_simulation(&data);
 
 	free_all(&data);
-	return (0);
+	return (EXIT_SUCCESS);
 }

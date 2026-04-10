@@ -1,10 +1,11 @@
 #include "philo.h"
 
-void *philo_routine(void *arg)
+static void *philo_routine(void *arg)
 {
-	t_philo *philo = (t_philo *)arg;
-
-	while (!philo->is_dead)
+	t_philo *philo;
+	
+	philo = (t_philo *)arg;
+	while (!philo->data->someone_died)
 	{
 		long long now = get_time();
 		long long time_since_last_meal = now - philo->last_meal;
@@ -14,7 +15,7 @@ void *philo_routine(void *arg)
 			pthread_mutex_lock(&philo->data->writing);
 			printf("%lld %d died\n", now - philo->data->start_time, philo->id);
 			pthread_mutex_unlock(&philo->data->writing);
-			philo->is_dead = 1;
+			philo->data->someone_died = 1;
 			break;
 		}
 	}
@@ -32,6 +33,8 @@ void	start_simulation(t_data *data)
 	{
 		data->philos[i].last_meal = data->start_time;
 		pthread_create(&threads[i], NULL, philo_routine, &data->philos[i]);
+		if (data->someone_died == 1)
+			return ;
 		i++;
 	}
 	i = 0;
