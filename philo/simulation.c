@@ -51,39 +51,6 @@ void	check_if_eaten_enough(t_data *data)
 	data->someone_died = TRUE;
 }
 
-void	philo_take_forks(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
-	print_status(philo, FORK_MSG);
-	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
-	print_status(philo, FORK_MSG);
-}
-
-void	philo_return_forks(t_philo *philo)
-{
-	pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
-	pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
-}
-
-void	philo_eat(t_philo *philo)
-{
-	print_status(philo, EAT_MSG);
-	philo->last_meal = get_time();
-	usleep(philo->data->t_eat * 1000);
-	philo->meals_eaten++;
-}
-
-void	philo_sleep(t_philo *philo)
-{
-	print_status(philo, SLEEP_MSG);
-	usleep(philo->data->t_sleep * 1000);
-}
-
-void	philo_think(t_philo *philo)
-{
-	print_status(philo, THINK_MSG);
-}
-
 static void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -102,17 +69,20 @@ static void	*philo_routine(void *arg)
 	return (NULL);
 }
 
-void	start_simulation(t_data *data)
+static void	handle_single_philo(t_data *data)
 {
-	size_t	i;
-
 	if (data->num_philos == 1)
 	{
 		usleep(data->t_die);
 		output_die(&(data->philos[0]));
-		data->someone_died = 1;
+		data->someone_died = TRUE;
 	}
-	data->start_time = get_time();
+}
+
+static void	create_threads(t_data *data)
+{
+	size_t	i;
+
 	i = 0;
 	while (i < data->num_philos)
 	{
@@ -120,15 +90,35 @@ void	start_simulation(t_data *data)
 			philo_routine, &data->philos[i]);
 		i++;
 	}
+}
+
+static void	monitor_simulation(t_data *data)
+{
 	while (data->someone_died == FALSE)
 	{
 		check_if_died(data);
 		check_if_eaten_enough(data);
+		usleep(1000);
 	}
+}
+
+static void	join_threads(t_data *data)
+{
+	size_t	i;
+
 	i = 0;
 	while (i < data->num_philos)
 	{
 		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
+}
+
+void	start_simulation(t_data *data)
+{
+	handle_single_philo(data);
+	data->start_time = get_time();
+	create_threads(data);
+	monitor_simulation(data);
+	join_threads(data);
 }

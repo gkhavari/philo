@@ -86,5 +86,10 @@ int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit_str(const char *str);
 void		output_die(t_philo *philo);
 void		print_status(t_philo *philo, char *msg);
+void		philo_take_forks(t_philo *philo);
+void		philo_return_forks(t_philo *philo);
+void		philo_eat(t_philo *philo);
+void		philo_sleep(t_philo *philo);
+void		philo_think(t_philo *philo);
 
 #endif
