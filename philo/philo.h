@@ -60,7 +60,6 @@ typedef struct s_data
 	atomic_int		someone_died;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	writing;
-	pthread_mutex_t	meal_check;
 	t_philo			*philos;
 }	t_data;
 
@@ -85,10 +84,6 @@ int			ft_atoi_simple(const char *str);
 int			ft_isdigit_str(const char *str);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit_str(const char *str);
-void		output_take_fork(t_data *data, long long time, int philo);
-void		output_eat(t_data *data, long long time, int philo);
-void		output_sleep(t_data *data, long long time, int philo);
-void		output_think(t_data *data, long long time, int philo);
 void	output_die(t_philo *philo);
 void	print_status(t_philo *philo, char *msg);
 

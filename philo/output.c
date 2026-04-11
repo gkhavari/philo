@@ -25,34 +25,6 @@ void	print_status(t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->data->writing);
 }
 
-void	output_take_fork(t_data *data, long long time, int philo)
-{
-	if (data->someone_died)
-		return;
-	printf("%lld %d has taken a fork", time, philo);
-}
-
-void	output_eat(t_data *data, long long time, int philo)
-{
-	if (data->someone_died)
-		return;
-	printf("%lld %d is eating", time, philo);
-}
-
-void	output_sleep(t_data *data, long long time, int philo)
-{
-	if (data->someone_died)
-		return;
-	printf("%lld %d is sleeping", time, philo);
-}
-
-void	output_think(t_data *data, long long time, int philo)
-{
-	if (data->someone_died)
-		return;
-	printf("%lld %d is thinking", time, philo);
-}
-
 void	output_die(t_philo *philo)
 {
 	size_t time;

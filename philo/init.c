@@ -36,7 +36,6 @@ void	init_data(t_data *data, int argc, char **argv)
 		i++;
 	}
 	pthread_mutex_init(&data->writing, NULL);
-	pthread_mutex_init(&data->meal_check, NULL);
 	data->philos = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->philos)
 		return ;

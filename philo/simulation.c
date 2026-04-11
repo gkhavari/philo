@@ -69,9 +69,7 @@ void	philo_return_forks(t_philo *philo)
 void	philo_eat(t_philo *philo)
 {
 	print_status(philo, EAT_MSG);
-	pthread_mutex_lock(&philo->data->meal_check);
 	philo->last_meal = get_time();
-	pthread_mutex_unlock(&philo->data->meal_check);
 	usleep(philo->data->t_eat * 1000);
 	philo->meals_eaten++;
 }
