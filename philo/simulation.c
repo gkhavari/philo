@@ -53,16 +53,6 @@ static void	create_threads(t_data *data)
 	}
 }
 
-static void	monitor_simulation(t_data *data)
-{
-	while (data->someone_died == FALSE)
-	{
-		check_if_died(data);
-		check_if_eaten_enough(data);
-		usleep(1000);
-	}
-}
-
 static void	join_threads(t_data *data)
 {
 	size_t	i;

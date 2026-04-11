@@ -38,3 +38,13 @@ void	check_if_eaten_enough(t_data *data)
 	}
 	data->someone_died = TRUE;
 }
+
+void	monitor_simulation(t_data *data)
+{
+	while (data->someone_died == FALSE)
+	{
+		check_if_died(data);
+		check_if_eaten_enough(data);
+		usleep(1000);
+	}
+}
