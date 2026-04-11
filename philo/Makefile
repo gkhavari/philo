@@ -5,6 +5,7 @@ SRCS    =	main.c \
 			init.c \
 			simulation.c \
 			actions.c \
+			monitor.c \
 			output.c \
 			utils.c \
 			utils_input_check.c

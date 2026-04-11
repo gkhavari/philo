@@ -91,5 +91,7 @@ void		philo_return_forks(t_philo *philo);
 void		philo_eat(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		philo_think(t_philo *philo);
+void		check_if_died(t_data *data);
+void		check_if_eaten_enough(t_data *data);
 
 #endif
