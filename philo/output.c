@@ -27,7 +27,7 @@ void	print_status(t_philo *philo, char *msg)
 
 void	output_die(t_philo *philo)
 {
-	size_t time;
+	size_t	time;
 
 	time = get_time() - philo->data->start_time;
 	printf("%zu %d died\n", time, philo->id);

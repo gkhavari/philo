@@ -55,7 +55,6 @@ void	philo_take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
 	print_status(philo, FORK_MSG);
-
 	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
 	print_status(philo, FORK_MSG);
 }
@@ -107,7 +106,7 @@ void	start_simulation(t_data *data)
 {
 	size_t	i;
 
-	if(data->num_philos == 1)
+	if (data->num_philos == 1)
 	{
 		usleep(data->t_die);
 		output_die(&(data->philos[0]));
@@ -117,7 +116,8 @@ void	start_simulation(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
-		pthread_create(&data->philos[i].thread, NULL, philo_routine, &data->philos[i]);
+		pthread_create(&data->philos[i].thread, NULL,
+			philo_routine, &data->philos[i]);
 		i++;
 	}
 	while (data->someone_died == FALSE)

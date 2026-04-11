@@ -84,8 +84,7 @@ int			ft_atoi_simple(const char *str);
 int			ft_isdigit_str(const char *str);
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit_str(const char *str);
-void	output_die(t_philo *philo);
-void	print_status(t_philo *philo, char *msg);
-
+void		output_die(t_philo *philo);
+void		print_status(t_philo *philo, char *msg);
 
 #endif
