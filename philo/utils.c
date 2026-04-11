@@ -37,7 +37,6 @@ void	free_all(t_data *data)
 		data->forks = NULL;
 	}
 	pthread_mutex_destroy(&data->writing);
-	pthread_mutex_destroy(&data->meal_check);
 	if (data->philos)
 	{
 		free(data->philos);
