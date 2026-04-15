@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gkhavari <gkhavari@student.42vienna.c      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/15 22:22:13 by gkhavari          #+#    #+#             */
+/*   Updated: 2026/04/15 22:22:15 by gkhavari         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	check_if_died(t_data *data)
@@ -15,8 +27,8 @@ void	check_if_died(t_data *data)
 		pthread_mutex_unlock(&data->meal_check);
 		if (current_time - last_meal > data->t_die)
 		{
-			output_die(&(data->philos[i]));
 			pthread_mutex_lock(&data->death_check);
+			output_die(&(data->philos[i]));
 			data->end_simulation = TRUE;
 			pthread_mutex_unlock(&data->death_check);
 			return ;
@@ -56,9 +68,6 @@ void	monitor_simulation(t_data *data)
 		}
 		pthread_mutex_unlock(&data->death_check);
 		check_if_died(data);
-		pthread_mutex_lock(&data->meal_check);
-		check_if_eaten_enough(data);
-		pthread_mutex_unlock(&data->meal_check);
 		my_usleep(1000);
 	}
 }

@@ -12,21 +12,11 @@
 
 #include "philo.h"
 
-void	init_data(t_data *data, int argc, char **argv)
+static void	init_mutex(t_data *data)
 {
 	size_t	i;
 
 	i = 0;
-	data->num_philos = (size_t)ft_atoi_simple(argv[1]);
-	data->t_die = (size_t)ft_atoi_simple(argv[2]);
-	data->t_eat = (size_t)ft_atoi_simple(argv[3]);
-	data->t_sleep = (size_t)ft_atoi_simple(argv[4]);
-	if (argc == 6)
-		data->must_eat = (size_t)ft_atoi_simple(argv[5]);
-	else
-		data->must_eat = 0;
-	data->start_time = get_time();
-	data->end_simulation = FALSE;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
 	if (!data->forks)
 		return ;
@@ -38,6 +28,23 @@ void	init_data(t_data *data, int argc, char **argv)
 	pthread_mutex_init(&data->writing, NULL);
 	pthread_mutex_init(&data->meal_check, NULL);
 	pthread_mutex_init(&data->death_check, NULL);
+}
+
+void	init_data(t_data *data, int argc, char **argv)
+{
+	data->num_philos = (size_t)ft_atoi_simple(argv[1]);
+	data->t_die = (size_t)ft_atoi_simple(argv[2]);
+	data->t_eat = (size_t)ft_atoi_simple(argv[3]);
+	data->t_sleep = (size_t)ft_atoi_simple(argv[4]);
+	if (argc == 6)
+		data->must_eat = (size_t)ft_atoi_simple(argv[5]);
+	else
+		data->must_eat = 0;
+	data->start_time = get_time();
+	data->end_simulation = FALSE;
+	init_mutex(data);
+	if (!data->forks)
+		return ;
 	data->philos = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->philos)
 		return ;
