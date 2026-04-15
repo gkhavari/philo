@@ -26,7 +26,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	else
 		data->must_eat = 0;
 	data->start_time = get_time();
-	data->someone_died = FALSE;
+	data->end_simulation = FALSE;
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
 	if (!data->forks)
 		return ;
@@ -36,6 +36,8 @@ void	init_data(t_data *data, int argc, char **argv)
 		i++;
 	}
 	pthread_mutex_init(&data->writing, NULL);
+	pthread_mutex_init(&data->meal_check, NULL);
+	pthread_mutex_init(&data->death_check, NULL);
 	data->philos = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->philos)
 		return ;

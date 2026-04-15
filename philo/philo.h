@@ -57,9 +57,11 @@ typedef struct s_data
 	size_t			t_sleep;
 	size_t			must_eat;
 	long long		start_time;
-	atomic_int		someone_died;
+	int				end_simulation;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	writing;
+	pthread_mutex_t	meal_check;
+	pthread_mutex_t	death_check;
 	t_philo			*philos;
 }	t_data;
 
@@ -69,8 +71,8 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
-	atomic_size_t	last_meal;
-	atomic_size_t	meals_eaten;
+	size_t			last_meal;
+	size_t			meals_eaten;
 	t_data			*data;
 }	t_philo;
 

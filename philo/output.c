@@ -16,13 +16,18 @@ void	print_status(t_philo *philo, char *msg)
 {
 	size_t	time;
 
+	pthread_mutex_lock(&philo->data->death_check);
 	pthread_mutex_lock(&philo->data->writing);
-	if (!philo->data->someone_died)
+	if (philo->data->end_simulation == TRUE)
 	{
-		time = get_time() - philo->data->start_time;
-		printf("%zu %d %s\n", time, philo->id, msg);
+		pthread_mutex_unlock(&philo->data->writing);
+		pthread_mutex_unlock(&philo->data->death_check);
+		return ;
 	}
+	time = get_time() - philo->data->start_time;
+	printf("%zu %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->writing);
+	pthread_mutex_unlock(&philo->data->death_check);
 }
 
 void	output_die(t_philo *philo)
@@ -30,5 +35,7 @@ void	output_die(t_philo *philo)
 	size_t	time;
 
 	time = get_time() - philo->data->start_time;
+	pthread_mutex_lock(&philo->data->writing);
 	printf("%zu %d died\n", time, philo->id);
+	pthread_mutex_unlock(&philo->data->writing);
 }

@@ -17,15 +17,61 @@ static void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	// Phase offset: stagger initial actions
 	if (philo->id % 2 == 0)
-		usleep(1000);
-	while (!philo->data->someone_died)
 	{
-		philo_think(philo);
-		philo_take_forks(philo);
-		philo_eat(philo);
-		philo_return_forks(philo);
-		philo_sleep(philo);
+		while (1)
+		{
+			pthread_mutex_lock(&philo->data->death_check);
+			if (philo->data->end_simulation == TRUE)
+			{
+				pthread_mutex_unlock(&philo->data->death_check);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->data->death_check);
+			philo_take_forks(philo);
+			philo_eat(philo);
+			philo_return_forks(philo);
+			philo_sleep(philo);
+			philo_think(philo);
+        }
+	}
+	else if (philo->id == (int)philo->data->num_philos)
+	{
+		while (1)
+		{
+			pthread_mutex_lock(&philo->data->death_check);
+			if (philo->data->end_simulation == TRUE)
+			{
+				pthread_mutex_unlock(&philo->data->death_check);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->data->death_check);
+			philo_sleep(philo);
+			philo_think(philo);
+			philo_take_forks(philo);
+			philo_eat(philo);
+			philo_return_forks(philo);
+		}
+	}
+	else
+	{
+		// Odd philosophers (except last) start thinking
+		while (1)
+		{
+			pthread_mutex_lock(&philo->data->death_check);
+			if (philo->data->end_simulation == TRUE)
+			{
+				pthread_mutex_unlock(&philo->data->death_check);
+				break ;
+			}
+			pthread_mutex_unlock(&philo->data->death_check);
+			philo_think(philo);
+			philo_take_forks(philo);
+			philo_eat(philo);
+			philo_return_forks(philo);
+			philo_sleep(philo);
+		}
 	}
 	return (NULL);
 }
@@ -36,7 +82,9 @@ static void	handle_single_philo(t_data *data)
 	{
 		usleep(data->t_die);
 		output_die(&(data->philos[0]));
-		data->someone_died = TRUE;
+		pthread_mutex_lock(&data->death_check);
+		data->end_simulation = TRUE;
+		pthread_mutex_unlock(&data->death_check);
 	}
 }
 
