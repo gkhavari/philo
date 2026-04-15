@@ -96,5 +96,6 @@ void		philo_think(t_philo *philo);
 void		check_if_died(t_data *data);
 void		check_if_eaten_enough(t_data *data);
 void		monitor_simulation(t_data *data);
+void		my_usleep(long milliseconds);
 
 #endif

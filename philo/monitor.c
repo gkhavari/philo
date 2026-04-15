@@ -59,6 +59,6 @@ void	monitor_simulation(t_data *data)
 		pthread_mutex_lock(&data->meal_check);
 		check_if_eaten_enough(data);
 		pthread_mutex_unlock(&data->meal_check);
-		usleep(1000);
+		my_usleep(1000);
 	}
 }
