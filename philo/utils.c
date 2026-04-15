@@ -43,3 +43,14 @@ void	free_all(t_data *data)
 		data->philos = NULL;
 	}
 }
+
+void	my_usleep(long milliseconds)
+{
+	long long	start;
+
+	start = get_time();
+	while (get_time() - start < milliseconds)
+	{
+		usleep(500);
+	}
+}

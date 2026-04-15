@@ -33,17 +33,17 @@ void	philo_eat(t_philo *philo)
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->meal_check);
 	print_status(philo, EAT_MSG);
-	usleep(philo->data->t_eat * 1000);
+	my_usleep(philo->data->t_eat);
 }
 
 void	philo_sleep(t_philo *philo)
 {
 	print_status(philo, SLEEP_MSG);
-	usleep(philo->data->t_sleep * 1000);
+	my_usleep(philo->data->t_sleep);
 }
 
 void	philo_think(t_philo *philo)
 {
 	print_status(philo, THINK_MSG);
-	usleep(philo->data->t_eat * 100);
+	my_usleep(philo->data->t_eat);
 }

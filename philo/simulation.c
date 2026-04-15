@@ -80,7 +80,7 @@ static void	handle_single_philo(t_data *data)
 {
 	if (data->num_philos == 1)
 	{
-		usleep(data->t_die);
+		my_usleep(data->t_die);
 		output_die(&(data->philos[0]));
 		pthread_mutex_lock(&data->death_check);
 		data->end_simulation = TRUE;
