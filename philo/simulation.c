@@ -25,24 +25,24 @@ static void	handle_single_philo(t_data *data)
 }
 
 /*returns number of threads created*/
-static size_t create_threads(t_data *data)
+static size_t	create_threads(t_data *data)
 {
-    size_t created;
+	size_t	created;
 
-    created = 0;
-    while (created < data->num_philos)
-    {
-        if (pthread_create(&data->philos[created].thread, NULL,
-                philo_routine, &data->philos[created]) != 0)
-        {
-            pthread_mutex_lock(&data->death_check);
-            data->end_simulation = TRUE;
-            pthread_mutex_unlock(&data->death_check);
-            break;
-        }
-        created++;
-    }
-    return (created);
+	created = 0;
+	while (created < data->num_philos)
+	{
+		if (pthread_create(&data->philos[created].thread, NULL,
+				philo_routine, &data->philos[created]) != 0)
+		{
+			pthread_mutex_lock(&data->death_check);
+			data->end_simulation = TRUE;
+			pthread_mutex_unlock(&data->death_check);
+			break ;
+		}
+		created++;
+	}
+	return (created);
 }
 
 /*makes sure to only join created threads*/
@@ -67,8 +67,8 @@ void	start_simulation(t_data *data)
 	created = create_threads(data);
 	if (created != data->num_philos)
 	{
-    	join_threads(data, created);
-    	return ;
+		join_threads(data, created);
+		return ;
 	}
 	monitor_simulation(data);
 	join_threads(data, created);
