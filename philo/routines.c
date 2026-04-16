@@ -80,7 +80,7 @@ void	*philo_routine(void *arg)
 	if (philo->id % 2 == 0)
 		routine_even(philo);
 	else if (philo->id == (int)philo->data->num_philos)
-		routin_last(philo);
+		routine_last(philo);
 	else
 		routine_odd(philo);
 	return (NULL);

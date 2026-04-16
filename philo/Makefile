@@ -4,8 +4,8 @@ SRCS    =	main.c \
 			input_check.c \
 			init.c \
 			simulation.c \
-			routine.c \
 			actions.c \
+			routines.c \
 			monitor.c \
 			output.c \
 			utils.c \
