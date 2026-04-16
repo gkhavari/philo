@@ -45,7 +45,8 @@ void	free_all(t_data *data)
 	}
 }
 
-void	my_usleep(long milliseconds)
+/*sleep for this amount of milliseconds*/
+void	my_msleep(long milliseconds)
 {
 	long long	start;
 

@@ -12,27 +12,44 @@
 
 #include "philo.h"
 
+/*returns value of end_simulation flag, uses mutex death check*/
+int	end_simulation(t_data *data)
+{
+	pthread_mutex_lock(&data->death_check);
+	if (data->end_simulation == TRUE)
+	{
+		pthread_mutex_unlock(&data->death_check);
+		return (TRUE);
+	}
+	pthread_mutex_unlock(&data->death_check);
+	return (FALSE);
+}
+
 void	check_if_died(t_data *data)
 {
 	size_t		i;
 	size_t		current_time;
-	size_t		last_meal;
 
 	i = 0;
 	while (i < data->num_philos)
 	{
 		current_time = get_time();
 		pthread_mutex_lock(&data->meal_check);
-		last_meal = data->philos[i].last_meal;
-		pthread_mutex_unlock(&data->meal_check);
-		if (current_time - last_meal > data->t_die)
+		if (end_simulation(data) == TRUE)
+		{
+			pthread_mutex_unlock(&data->meal_check);
+			return ;
+		}
+		if (current_time - data->philos[i].last_meal >= data->t_die)
 		{
 			pthread_mutex_lock(&data->death_check);
 			output_die(&(data->philos[i]));
 			data->end_simulation = TRUE;
 			pthread_mutex_unlock(&data->death_check);
+			pthread_mutex_unlock(&data->meal_check);
 			return ;
 		}
+		pthread_mutex_unlock(&data->meal_check);
 		i++;
 	}
 }
@@ -67,7 +84,11 @@ void	monitor_simulation(t_data *data)
 			break ;
 		}
 		pthread_mutex_unlock(&data->death_check);
+		pthread_mutex_lock(&data->meal_check);
+		check_if_eaten_enough(data);
+		pthread_mutex_unlock(&data->meal_check);
+		if (end_simulation(data) == TRUE)
+			break ;
 		check_if_died(data);
-		my_usleep(1000);
 	}
 }

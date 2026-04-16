@@ -19,7 +19,6 @@
 # include <string.h>
 # include <stdio.h>
 # include <sys/time.h>
-# include <stdatomic.h>
 
 # define INT_MAX 2147483647
 # define HELP_FLAG "--help"
@@ -71,6 +70,8 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
+	int				has_left_fork;
+	int				has_right_fork;
 	size_t			last_meal;
 	size_t			meals_eaten;
 	t_data			*data;
@@ -96,7 +97,8 @@ void		philo_think(t_philo *philo);
 void		check_if_died(t_data *data);
 void		check_if_eaten_enough(t_data *data);
 void		monitor_simulation(t_data *data);
-void		my_usleep(long milliseconds);
+void		my_msleep(long milliseconds);
 void		*philo_routine(void *arg);
+int			end_simulation(t_data *data);
 
 #endif
