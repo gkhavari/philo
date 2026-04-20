@@ -52,6 +52,17 @@ static void	routine_last(t_philo *philo)
 	}
 }
 
+void	*single_philo_routine(t_philo *philo)
+{
+	print_status(philo, FORK_MSG);
+	my_msleep(philo->data->t_die);
+	output_die(philo->data->philos);
+	pthread_mutex_lock(&philo->data->death_check);
+	philo->data->end_simulation = TRUE;
+	pthread_mutex_unlock(&philo->data->death_check);
+	return (NULL);
+}
+
 /*Odd Philosophers sleep -> think -> eat*/
 static void	routine_odd(t_philo *philo)
 {
@@ -76,6 +87,12 @@ void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
 
+	philo = (t_philo *) arg;
+	if (philo->data->num_philos == 1)
+	{
+		single_philo_routine(philo);
+		return (NULL);
+	}
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		routine_even(philo);

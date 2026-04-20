@@ -12,18 +12,6 @@
 
 #include "philo.h"
 
-static void	handle_single_philo(t_data *data)
-{
-	if (data->num_philos == 1)
-	{
-		my_msleep(data->t_die);
-		output_die(&(data->philos[0]));
-		pthread_mutex_lock(&data->death_check);
-		data->end_simulation = TRUE;
-		pthread_mutex_unlock(&data->death_check);
-	}
-}
-
 /*returns number of threads created*/
 static size_t	create_threads(t_data *data)
 {
@@ -62,12 +50,16 @@ void	start_simulation(t_data *data)
 {
 	size_t	created;
 
-	handle_single_philo(data);
 	data->start_time = get_time();
 	created = create_threads(data);
 	if (created != data->num_philos)
 	{
 		join_threads(data, created);
+		return ;
+	}
+	if (data->num_philos == 1)
+	{
+		join_threads(data, data->num_philos);
 		return ;
 	}
 	monitor_simulation(data);

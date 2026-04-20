@@ -60,7 +60,6 @@ void	philo_eat(t_philo *philo)
 
 void	philo_sleep(t_philo *philo)
 {
-
 	print_status(philo, SLEEP_MSG);
 	my_msleep(philo->data->t_sleep);
 }
