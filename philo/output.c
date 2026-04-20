@@ -12,24 +12,18 @@
 
 #include "philo.h"
 
+/*Prints corresponding status message, uses writing mutex*/
 void	print_status(t_philo *philo, char *msg)
 {
 	size_t	time;
 
-	pthread_mutex_lock(&philo->data->death_check);
 	pthread_mutex_lock(&philo->data->writing);
-	if (philo->data->end_simulation == TRUE)
-	{
-		pthread_mutex_unlock(&philo->data->writing);
-		pthread_mutex_unlock(&philo->data->death_check);
-		return ;
-	}
 	time = get_time() - philo->data->start_time;
 	printf("%zu %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->writing);
-	pthread_mutex_unlock(&philo->data->death_check);
 }
 
+/*Prints death status message, uses writing mutex*/
 void	output_die(t_philo *philo)
 {
 	size_t	time;
