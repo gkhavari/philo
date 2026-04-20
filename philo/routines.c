@@ -56,7 +56,7 @@ void	*single_philo_routine(t_philo *philo)
 {
 	print_status(philo, FORK_MSG);
 	my_msleep(philo->data->t_die);
-	output_die(philo->data->philos);
+	print_status(philo, DIE_MSG);
 	pthread_mutex_lock(&philo->data->death_check);
 	philo->data->end_simulation = TRUE;
 	pthread_mutex_unlock(&philo->data->death_check);

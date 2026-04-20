@@ -20,19 +20,61 @@ void	philo_take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
+		while (pthread_mutex_trylock(&philo->data->forks[philo->right_fork]) != 0)
+		{
+			pthread_mutex_lock(&philo->data->death_check);
+			if (philo->data->end_simulation == TRUE)
+			{
+				pthread_mutex_unlock(&philo->data->death_check);
+				return ;
+			}
+			pthread_mutex_unlock(&philo->data->death_check);
+			usleep(10);
+		}
 		philo->has_right_fork = TRUE;
 		print_status(philo, FORK_MSG);
-		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+		while (pthread_mutex_trylock(&philo->data->forks[philo->left_fork]) != 0)
+		{
+			pthread_mutex_lock(&philo->data->death_check);
+			if (philo->data->end_simulation == TRUE)
+			{
+				pthread_mutex_unlock(&philo->data->death_check);
+				philo_return_forks(philo);
+				return ;
+			}
+			pthread_mutex_unlock(&philo->data->death_check);
+			usleep(10);
+		}
 		philo->has_left_fork = TRUE;
 		print_status(philo, FORK_MSG);
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+		while (pthread_mutex_trylock(&philo->data->forks[philo->left_fork]) != 0)
+		{
+			pthread_mutex_lock(&philo->data->death_check);
+			if (philo->data->end_simulation == TRUE)
+			{
+				pthread_mutex_unlock(&philo->data->death_check);
+				return ;
+			}
+			pthread_mutex_unlock(&philo->data->death_check);
+			usleep(10);
+		}
 		philo->has_left_fork = TRUE;
 		print_status(philo, FORK_MSG);
-		pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
+		while (pthread_mutex_trylock(&philo->data->forks[philo->right_fork]) != 0)
+		{
+			pthread_mutex_lock(&philo->data->death_check);
+			if (philo->data->end_simulation == TRUE)
+			{
+				pthread_mutex_unlock(&philo->data->death_check);
+				philo_return_forks(philo);
+				return ;
+			}
+			pthread_mutex_unlock(&philo->data->death_check);
+			usleep(10);
+		}
 		philo->has_right_fork = TRUE;
 		print_status(philo, FORK_MSG);
 	}

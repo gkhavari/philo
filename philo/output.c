@@ -17,10 +17,15 @@ void	print_status(t_philo *philo, char *msg)
 {
 	size_t	time;
 
-	pthread_mutex_lock(&philo->data->writing);
 	time = get_time() - philo->data->start_time;
-	printf("%zu %d %s\n", time, philo->id, msg);
-	pthread_mutex_unlock(&philo->data->writing);
+	pthread_mutex_lock(&philo->data->death_check);
+	if (philo->data->end_simulation == FALSE || strcmp(msg, DIE_MSG) == 0)
+	{
+		pthread_mutex_lock(&philo->data->writing);
+		printf("%zu %d %s\n", time, philo->id, msg);
+		pthread_mutex_unlock(&philo->data->writing);
+	}
+	pthread_mutex_unlock(&philo->data->death_check);
 }
 
 /*Prints death status message, uses writing mutex*/

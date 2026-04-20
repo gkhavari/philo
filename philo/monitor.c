@@ -42,8 +42,8 @@ void	check_if_died(t_data *data)
 		}
 		if (current_time - data->philos[i].last_meal >= data->t_die)
 		{
+			print_status(&(data->philos[i]), DIE_MSG);
 			pthread_mutex_lock(&data->death_check);
-			output_die(&(data->philos[i]));
 			data->end_simulation = TRUE;
 			pthread_mutex_unlock(&data->death_check);
 			pthread_mutex_unlock(&data->meal_check);
