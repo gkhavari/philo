@@ -75,15 +75,8 @@ void	check_if_eaten_enough(t_data *data)
 
 void	monitor_simulation(t_data *data)
 {
-	while (1)
+	while (end_simulation(data) == FALSE)
 	{
-		pthread_mutex_lock(&data->death_check);
-		if (data->end_simulation)
-		{
-			pthread_mutex_unlock(&data->death_check);
-			break ;
-		}
-		pthread_mutex_unlock(&data->death_check);
 		pthread_mutex_lock(&data->meal_check);
 		check_if_eaten_enough(data);
 		pthread_mutex_unlock(&data->meal_check);
