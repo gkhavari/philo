@@ -12,72 +12,14 @@
 
 #include "philo.h"
 
-/*
-Even philosophers take right fork first then left,
-odd philosophers left fork first then right
-*/
 void	philo_take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		while (pthread_mutex_trylock(&philo->data->forks[philo->right_fork]) != 0)
-		{
-			pthread_mutex_lock(&philo->data->death_check);
-			if (philo->data->end_simulation == TRUE)
-			{
-				pthread_mutex_unlock(&philo->data->death_check);
-				return ;
-			}
-			pthread_mutex_unlock(&philo->data->death_check);
-			usleep(10);
-		}
-		philo->has_right_fork = TRUE;
-		print_status(philo, FORK_MSG);
-		while (pthread_mutex_trylock(&philo->data->forks[philo->left_fork]) != 0)
-		{
-			pthread_mutex_lock(&philo->data->death_check);
-			if (philo->data->end_simulation == TRUE)
-			{
-				pthread_mutex_unlock(&philo->data->death_check);
-				philo_return_forks(philo);
-				return ;
-			}
-			pthread_mutex_unlock(&philo->data->death_check);
-			usleep(10);
-		}
-		philo->has_left_fork = TRUE;
-		print_status(philo, FORK_MSG);
-	}
-	else
-	{
-		while (pthread_mutex_trylock(&philo->data->forks[philo->left_fork]) != 0)
-		{
-			pthread_mutex_lock(&philo->data->death_check);
-			if (philo->data->end_simulation == TRUE)
-			{
-				pthread_mutex_unlock(&philo->data->death_check);
-				return ;
-			}
-			pthread_mutex_unlock(&philo->data->death_check);
-			usleep(10);
-		}
-		philo->has_left_fork = TRUE;
-		print_status(philo, FORK_MSG);
-		while (pthread_mutex_trylock(&philo->data->forks[philo->right_fork]) != 0)
-		{
-			pthread_mutex_lock(&philo->data->death_check);
-			if (philo->data->end_simulation == TRUE)
-			{
-				pthread_mutex_unlock(&philo->data->death_check);
-				philo_return_forks(philo);
-				return ;
-			}
-			pthread_mutex_unlock(&philo->data->death_check);
-			usleep(10);
-		}
-		philo->has_right_fork = TRUE;
-		print_status(philo, FORK_MSG);
-	}
+	pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
+	philo->has_right_fork = TRUE;
+	print_status(philo, FORK_MSG);
+	pthread_mutex_lock(&philo->data->forks[philo->left_fork]);
+	philo->has_left_fork = TRUE;
+	print_status(philo, FORK_MSG);
 }
 
 void	philo_return_forks(t_philo *philo)
@@ -92,8 +34,8 @@ void	philo_return_forks(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->meal_check);
 	philo->last_meal = get_time();
+	pthread_mutex_lock(&philo->data->meal_check);
 	philo->meals_eaten++;
 	print_status(philo, EAT_MSG);
 	pthread_mutex_unlock(&philo->data->meal_check);
