@@ -15,13 +15,13 @@
 /*returns value of end_simulation flag, uses mutex death check*/
 int	end_simulation(t_data *data)
 {
-	pthread_mutex_lock(&data->death_check);
+	pthread_mutex_lock(&data->simulation_mutex);
 	if (data->end_simulation == TRUE)
 	{
-		pthread_mutex_unlock(&data->death_check);
+		pthread_mutex_unlock(&data->simulation_mutex);
 		return (TRUE);
 	}
-	pthread_mutex_unlock(&data->death_check);
+	pthread_mutex_unlock(&data->simulation_mutex);
 	return (FALSE);
 }
 
@@ -34,22 +34,22 @@ void	check_if_died(t_data *data)
 	while (i < data->num_philos)
 	{
 		current_time = get_time();
-		pthread_mutex_lock(&data->meal_check);
+		pthread_mutex_lock(&data->philos[i].state_mutex);
 		if (end_simulation(data) == TRUE)
 		{
-			pthread_mutex_unlock(&data->meal_check);
+			pthread_mutex_unlock(&data->philos[i].state_mutex);
 			return ;
 		}
 		if (current_time - data->philos[i].last_meal >= data->t_die)
 		{
 			print_status(&(data->philos[i]), DIE_MSG);
-			pthread_mutex_lock(&data->death_check);
+			pthread_mutex_lock(&data->simulation_mutex);
 			data->end_simulation = TRUE;
-			pthread_mutex_unlock(&data->death_check);
-			pthread_mutex_unlock(&data->meal_check);
+			pthread_mutex_unlock(&data->simulation_mutex);
+			pthread_mutex_unlock(&data->philos[i].state_mutex);
 			return ;
 		}
-		pthread_mutex_unlock(&data->meal_check);
+		pthread_mutex_unlock(&data->philos[i].state_mutex);
 		i++;
 	}
 }
@@ -64,24 +64,31 @@ void	check_if_eaten_enough(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
+		pthread_mutex_lock(&data->philos[i].state_mutex);
 		if (data->philos[i].meals_eaten < data->must_eat)
-			return ;
+		{
+			pthread_mutex_unlock(&data->philos[i].state_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&data->philos[i].state_mutex);
 		i++;
 	}
-	pthread_mutex_lock(&data->death_check);
-	data->end_simulation = TRUE;
-	pthread_mutex_unlock(&data->death_check);
+	if (i == data->num_philos)
+	{
+		pthread_mutex_lock(&data->simulation_mutex);
+		data->end_simulation = TRUE;
+		pthread_mutex_unlock(&data->simulation_mutex);
+		return ;
+	}
 }
 
 void	monitor_simulation(t_data *data)
 {
-	while (end_simulation(data) == FALSE)
+	while (1)
 	{
-		pthread_mutex_lock(&data->meal_check);
 		check_if_eaten_enough(data);
-		pthread_mutex_unlock(&data->meal_check);
+		check_if_died(data);
 		if (end_simulation(data) == TRUE)
 			break ;
-		check_if_died(data);
 	}
 }

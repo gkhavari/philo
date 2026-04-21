@@ -23,11 +23,11 @@ static void	init_mutex(t_data *data)
 	while (i < data->num_philos)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
+		pthread_mutex_init(&data->philos[i].state_mutex, NULL);
 		i++;
 	}
-	pthread_mutex_init(&data->writing, NULL);
-	pthread_mutex_init(&data->meal_check, NULL);
-	pthread_mutex_init(&data->death_check, NULL);
+	pthread_mutex_init(&data->print_mutex, NULL);
+	pthread_mutex_init(&data->simulation_mutex, NULL);
 }
 
 void	init_data(t_data *data, int argc, char **argv)
@@ -42,11 +42,11 @@ void	init_data(t_data *data, int argc, char **argv)
 		data->must_eat = 0;
 	data->start_time = get_time();
 	data->end_simulation = FALSE;
-	init_mutex(data);
-	if (!data->forks)
-		return ;
 	data->philos = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->philos)
+		return ;
+	init_mutex(data);
+	if (!data->forks)
 		return ;
 }
 

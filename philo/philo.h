@@ -58,9 +58,9 @@ typedef struct s_data
 	long long		start_time;
 	int				end_simulation;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	writing;
-	pthread_mutex_t	meal_check;
-	pthread_mutex_t	death_check;
+	pthread_mutex_t	print_mutex;
+//	pthread_mutex_t	meal_check;
+	pthread_mutex_t	simulation_mutex;
 	t_philo			*philos;
 }	t_data;
 
@@ -74,6 +74,7 @@ typedef struct s_philo
 	int				has_right_fork;
 	size_t			last_meal;
 	size_t			meals_eaten;
+	pthread_mutex_t	state_mutex;
 	t_data			*data;
 }	t_philo;
 

@@ -17,13 +17,13 @@ static void	routine_even(t_philo *philo)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->death_check);
+		pthread_mutex_lock(&philo->data->simulation_mutex);
 		if (philo->data->end_simulation == TRUE)
 		{
-			pthread_mutex_unlock(&philo->data->death_check);
+			pthread_mutex_unlock(&philo->data->simulation_mutex);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->data->death_check);
+		pthread_mutex_unlock(&philo->data->simulation_mutex);
 		philo_take_forks(philo);
 		philo_eat(philo);
 		philo_return_forks(philo);
@@ -37,13 +37,13 @@ static void	routine_last(t_philo *philo)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->death_check);
+		pthread_mutex_lock(&philo->data->simulation_mutex);
 		if (philo->data->end_simulation == TRUE)
 		{
-			pthread_mutex_unlock(&philo->data->death_check);
+			pthread_mutex_unlock(&philo->data->simulation_mutex);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->data->death_check);
+		pthread_mutex_unlock(&philo->data->simulation_mutex);
 		philo_think(philo);
 		philo_take_forks(philo);
 		philo_eat(philo);
@@ -57,9 +57,9 @@ void	*single_philo_routine(t_philo *philo)
 	print_status(philo, FORK_MSG);
 	my_msleep(philo->data->t_die);
 	print_status(philo, DIE_MSG);
-	pthread_mutex_lock(&philo->data->death_check);
+	pthread_mutex_lock(&philo->data->simulation_mutex);
 	philo->data->end_simulation = TRUE;
-	pthread_mutex_unlock(&philo->data->death_check);
+	pthread_mutex_unlock(&philo->data->simulation_mutex);
 	return (NULL);
 }
 
@@ -68,13 +68,13 @@ static void	routine_odd(t_philo *philo)
 {
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->death_check);
+		pthread_mutex_lock(&philo->data->simulation_mutex);
 		if (philo->data->end_simulation == TRUE)
 		{
-			pthread_mutex_unlock(&philo->data->death_check);
+			pthread_mutex_unlock(&philo->data->simulation_mutex);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->data->death_check);
+		pthread_mutex_unlock(&philo->data->simulation_mutex);
 		philo_sleep(philo);
 		philo_think(philo);
 		philo_take_forks(philo);

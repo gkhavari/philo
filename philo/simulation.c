@@ -23,9 +23,9 @@ static size_t	create_threads(t_data *data)
 		if (pthread_create(&data->philos[created].thread, NULL,
 				philo_routine, &data->philos[created]) != 0)
 		{
-			pthread_mutex_lock(&data->death_check);
+			pthread_mutex_lock(&data->simulation_mutex);
 			data->end_simulation = TRUE;
-			pthread_mutex_unlock(&data->death_check);
+			pthread_mutex_unlock(&data->simulation_mutex);
 			break ;
 		}
 		created++;
