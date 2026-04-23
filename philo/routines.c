@@ -12,6 +12,7 @@
 
 #include "philo.h"
 
+/** Handles single philosopher case, takes one fork, waits to die, uses simulation mutex */
 static void	*single_philo_routine(t_philo *philo)
 {
 	print_status(philo, FORK_MSG);
@@ -23,6 +24,7 @@ static void	*single_philo_routine(t_philo *philo)
 	return (NULL);
 }
 
+/** Main philosopher thread routine, handles eating cycle with simulation mutex checks */
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;

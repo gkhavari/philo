@@ -48,6 +48,7 @@ static void	print_usage(const t_arg_info *g_args)
 	printf(USAGE_DETAILS);
 }
 
+/** Validates all command line arguments */
 int	input_check(int argc, char **argv)
 {
 	int						error;

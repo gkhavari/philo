@@ -12,6 +12,7 @@
 
 #include "philo.h"
 
+/** Converts string to int, handles overflow */
 int	ft_atoi_simple(const char *str)
 {
 	size_t	i;
@@ -33,6 +34,7 @@ int	ft_atoi_simple(const char *str)
 	return (result);
 }
 
+/** Checks if string consists only of digits */
 int	ft_isdigit_str(const char *str)
 {
 	int	i;
@@ -49,6 +51,7 @@ int	ft_isdigit_str(const char *str)
 	return (TRUE);
 }
 
+/** Compares two strings lexicographically */
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;

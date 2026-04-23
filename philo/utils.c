@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-/*returns time in millisecond*/
+/** Returns current time in milliseconds */
 long long	get_time(void)
 {
 	struct timeval	tv;
@@ -21,7 +21,7 @@ long long	get_time(void)
 	return ((long long)tv.tv_sec * 1000 + (long long) tv.tv_usec / 1000);
 }
 
-/*sleep for this amount of milliseconds*/
+/** Sleeps for specified milliseconds using usleep */
 void	my_msleep(long milliseconds)
 {
 	long long	start;

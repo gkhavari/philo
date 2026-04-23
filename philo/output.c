@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-/*Prints corresponding status message, uses writing mutex*/
+/** Prints philosopher status message, uses simulation and print mutexes for thread safety */
 void	print_status(t_philo *philo, char *msg)
 {
 	size_t	time;
@@ -26,15 +26,4 @@ void	print_status(t_philo *philo, char *msg)
 		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->simulation_mutex);
-}
-
-/*Prints death status message, uses writing mutex*/
-void	output_die(t_philo *philo)
-{
-	size_t	time;
-
-	time = get_time() - philo->data->start_time;
-	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("%zu %d died\n", time, philo->id);
-	pthread_mutex_unlock(&philo->data->print_mutex);
 }

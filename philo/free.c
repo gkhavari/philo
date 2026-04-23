@@ -41,6 +41,7 @@ static void	destroy_philo_mutex(t_data *data)
 	}
 }
 
+/** Frees all allocated resources, destroys all mutexes */
 void	free_all(t_data *data)
 {
 	free_forks(data);

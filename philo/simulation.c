@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-/*returns number of threads created*/
+/** Creates philosopher threads, uses simulation mutex on failure, returns number of threads created */
 static size_t	create_threads(t_data *data)
 {
 	size_t	created;
@@ -33,7 +33,7 @@ static size_t	create_threads(t_data *data)
 	return (created);
 }
 
-/*makes sure to only join created threads*/
+/** Joins created threads */
 static void	join_threads(t_data *data, size_t created)
 {
 	size_t	i;
@@ -46,6 +46,7 @@ static void	join_threads(t_data *data, size_t created)
 	}
 }
 
+/** Starts the simulation, creates and joins threads, calls monitoring */
 void	start_simulation(t_data *data)
 {
 	size_t	created;

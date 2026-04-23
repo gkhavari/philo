@@ -12,6 +12,7 @@
 
 #include "philo.h"
 
+/** Takes two forks in order, uses fork mutexes to prevent deadlock */
 void	philo_take_forks(t_philo *philo)
 {
 	int	first;
@@ -30,12 +31,14 @@ void	philo_take_forks(t_philo *philo)
 	print_status(philo, FORK_MSG);
 }
 
+/** Returns the two forks, unlocks fork mutexes */
 void	philo_return_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
 	pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
 }
 
+/** Simulates eating, updates last meal time and meal count with state mutex, sleeps for eat time */
 void	philo_eat(t_philo *philo)
 {
 	philo->last_meal = get_time();
@@ -46,12 +49,14 @@ void	philo_eat(t_philo *philo)
 	my_msleep(philo->data->t_eat);
 }
 
+/** Simulates sleeping, prints sleep status, sleeps for sleep time */
 void	philo_sleep(t_philo *philo)
 {
 	print_status(philo, SLEEP_MSG);
 	my_msleep(philo->data->t_sleep);
 }
 
+/** Simulates thinking, prints think status, sleeps extra for odd philosopher count */
 void	philo_think(t_philo *philo)
 {
 	print_status(philo, THINK_MSG);
