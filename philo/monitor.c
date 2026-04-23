@@ -55,7 +55,8 @@ void	check_philosopher_death(t_data *data)
 	}
 }
 
-/** Checks if all philosophers ate enough, uses state mutexes and simulation mutex */
+/** Checks if all philosophers ate enough, uses state mutexes 
+ * and simulation mutex */
 void	check_if_eaten_enough(t_data *data)
 {
 	size_t	i;

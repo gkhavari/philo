@@ -33,7 +33,8 @@ void	my_msleep(long milliseconds)
 	}
 }
 
-/** Prints philosopher status message, uses simulation and print mutexes for thread safety */
+/** Prints philosopher status message, uses simulation and print mutexes 
+ * for thread safety */
 void	print_status(t_philo *philo, char *msg)
 {
 	size_t	time;

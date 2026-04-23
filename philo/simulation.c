@@ -12,7 +12,8 @@
 
 #include "philo.h"
 
-/** Creates philosopher threads, uses simulation mutex on failure, returns number of threads created */
+/** Creates philosopher threads, uses simulation mutex on failure, 
+ * returns number of threads created */
 static size_t	create_threads(t_data *data)
 {
 	size_t	created;

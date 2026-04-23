@@ -12,7 +12,8 @@
 
 #include "philo.h"
 
-/** Entry point, checks input, initializes data, starts simulation, frees resources */
+/** Entry point, checks input, initializes data, starts simulation, 
+ * frees resources */
 int	main(int argc, char **argv)
 {
 	t_data	data;

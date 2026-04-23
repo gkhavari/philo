@@ -38,7 +38,8 @@ void	philo_return_forks(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
 }
 
-/** Simulates eating, updates last meal time and meal count with state mutex, sleeps for eat time */
+/** Simulates eating, updates last meal time and meal count with state mutex, 
+ * sleeps for eat time */
 void	philo_eat(t_philo *philo)
 {
 	philo->last_meal = get_time();
@@ -56,7 +57,8 @@ void	philo_sleep(t_philo *philo)
 	my_msleep(philo->data->t_sleep);
 }
 
-/** Simulates thinking, prints think status, sleeps extra for odd philosopher count */
+/** Simulates thinking, prints think status, sleeps extra for odd philosopher 
+ * count */
 void	philo_think(t_philo *philo)
 {
 	print_status(philo, THINK_MSG);

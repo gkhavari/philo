@@ -30,7 +30,8 @@ static void	init_mutex(t_data *data)
 	pthread_mutex_init(&data->simulation_mutex, NULL);
 }
 
-/** Initializes data structure with arguments, allocates philosophers array, calls init_mutex */
+/** Initializes data structure with arguments, allocates philosophers array, 
+ * calls init_mutex */
 void	init_data(t_data *data, int argc, char **argv)
 {
 	data->num_philos = (size_t)ft_atoi_simple(argv[1]);
