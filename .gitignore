@@ -1,3 +1,9 @@
 # Object and library files
 *.o
 *.a
+
+# Executable
+philo/philo
+
+# Tester directory
+42-philosophers-tester/
