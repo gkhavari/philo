@@ -9,7 +9,7 @@ The implementation is written in C and uses POSIX threads (pthreads) for concurr
 
 ## Key Features
 - **Deadlock Prevention**: Forks are acquired in a consistent order (lower index first) to avoid circular waiting.
-- **Starvation Prevention**: Philosophers eat in a round-robin manner through proper thread scheduling.
+- **Starvation Prevention**: Even-numbered philosophers have a small initial delay to stagger fork access and promote fair eating opportunities.
 - **Real-time Monitoring**: A dedicated monitor thread continuously checks for philosopher deaths.
 - **Thread-safe Output**: All status messages are printed using a mutex to prevent output interleaving.
 - **Edge Case Handling**: Special logic for single philosopher scenarios.

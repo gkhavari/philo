@@ -77,8 +77,6 @@ typedef struct s_philo
 	int				id;
 	int				left_fork;
 	int				right_fork;
-	int				has_left_fork;
-	int				has_right_fork;
 	size_t			last_meal;
 	size_t			meals_eaten;
 	pthread_mutex_t	state_mutex;

@@ -32,18 +32,8 @@ void	philo_take_forks(t_philo *philo)
 
 void	philo_return_forks(t_philo *philo)
 {
-	int	first;
-	int	second;
-
-	first = philo->left_fork;
-	second = philo->right_fork;
-	if (first > second)
-	{
-		first = philo->right_fork;
-		second = philo->left_fork;
-	}
-	pthread_mutex_unlock(&philo->data->forks[second]);
-	pthread_mutex_unlock(&philo->data->forks[first]);
+	pthread_mutex_unlock(&philo->data->forks[philo->left_fork]);
+	pthread_mutex_unlock(&philo->data->forks[philo->right_fork]);
 }
 
 void	philo_eat(t_philo *philo)
