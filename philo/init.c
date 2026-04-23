@@ -37,11 +37,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	data->num_philos = (size_t)ft_atoi_simple(argv[1]);
 	data->t_die = (size_t)ft_atoi_simple(argv[2]);
 	data->t_eat = (size_t)ft_atoi_simple(argv[3]);
-	if (data->t_die < data->t_eat)
-		data->t_eat = data->t_die;
 	data->t_sleep = (size_t)ft_atoi_simple(argv[4]);
-	if (data->t_die < data->t_sleep)
-		data->t_sleep = data->t_die;
 	if (argc == 6)
 		data->must_eat = (size_t)ft_atoi_simple(argv[5]);
 	else

@@ -13,7 +13,7 @@
 #include "philo.h"
 
 /** Checks if simulation should end, uses simulation mutex */
-static int	end_simulation(t_data *data)
+int	end_simulation(t_data *data)
 {
 	pthread_mutex_lock(&data->simulation_mutex);
 	if (data->end_simulation == TRUE)

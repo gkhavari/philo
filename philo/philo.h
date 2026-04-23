@@ -102,5 +102,7 @@ void		philo_think(t_philo *philo);
 void		monitor_simulation(t_data *data);
 void		my_msleep(long milliseconds);
 void		*philo_routine(void *arg);
+int			end_simulation(t_data *data);
+void		my_msleep_stop(t_data *data, long milliseconds);
 
 #endif

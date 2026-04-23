@@ -47,14 +47,14 @@ void	philo_eat(t_philo *philo)
 	philo->meals_eaten++;
 	print_status(philo, EAT_MSG);
 	pthread_mutex_unlock(&philo->state_mutex);
-	my_msleep(philo->data->t_eat);
+	my_msleep_stop(philo->data, philo->data->t_eat);
 }
 
 /** Simulates sleeping, prints sleep status, sleeps for sleep time */
 void	philo_sleep(t_philo *philo)
 {
 	print_status(philo, SLEEP_MSG);
-	my_msleep(philo->data->t_sleep);
+	my_msleep_stop(philo->data, philo->data->t_sleep);
 }
 
 /** Simulates thinking, prints think status, sleeps extra for odd philosopher 
@@ -65,8 +65,8 @@ void	philo_think(t_philo *philo)
 	if (philo->data->num_philos % 2 == 1)
 	{
 		if (philo->data->t_eat < philo->data->t_sleep)
-			my_msleep(philo->data->t_eat);
+			my_msleep_stop(philo->data, philo->data->t_eat);
 		else
-			my_msleep(philo->data->t_sleep);
+			my_msleep_stop(philo->data, philo->data->t_sleep);
 	}
 }
