@@ -31,7 +31,7 @@ Run the program with the following command:
 Use `./philo --help` to display usage information.
 
 Parameters:
-- `num_philosophers`: The number of philosophers and forks (must be between 1 and 200).
+- `num_philosophers`: The number of philosophers and forks.
 - `time_to_die`: Time in milliseconds after which a philosopher dies if they haven't started eating.
 - `time_to_eat`: Time in milliseconds it takes for a philosopher to eat.
 - `time_to_sleep`: Time in milliseconds a philosopher spends sleeping.
@@ -51,7 +51,7 @@ This adds the `-g` flag to the compiler options, allowing you to step through th
 
 ## Edge Cases
 - **Single Philosopher**: With only one philosopher, they can only pick up one fork and will inevitably die, as they cannot eat without two forks.
-- **High Number of Philosophers**: The program handles up to 200 philosophers efficiently.
+- **High Number of Philosophers**: The program handles up to approx. 200 philosophers efficiently.
 - **Minimum Times to Eat**: When specified, the simulation stops once all philosophers have eaten the required number of times.
 
 ## Resources
