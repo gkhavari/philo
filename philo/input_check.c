@@ -45,6 +45,7 @@ static void	print_usage(const t_arg_info *g_args)
 		g_args[ARG_TIME_SLEEP].name,
 		g_args[ARG_NUM_EAT].name
 		);
+	printf(USAGE_DETAILS);
 }
 
 int	input_check(int argc, char **argv)

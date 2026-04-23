@@ -22,6 +22,14 @@
 
 # define INT_MAX 2147483647
 # define HELP_FLAG "--help"
+# define USAGE_DETAILS "\nnum_philosophers: The number of philosophers and forks.\n\
+time_to_die: Time in milliseconds after which a philosopher dies if they haven't \
+started eating.\n\
+time_to_eat: Time in milliseconds it takes for a philosopher to eat.\n\
+time_to_sleep: Time in milliseconds a philosopher spends sleeping.\n\
+times_must_eat (optional): The number of times each philosopher must eat before \
+the simulation stops. If not provided, the simulation runs until a philosopher \
+dies.\n"
 # define TRUE 1
 # define FALSE 0
 # define ATOI_ERROR -1
@@ -59,7 +67,6 @@ typedef struct s_data
 	int				end_simulation;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
-//	pthread_mutex_t	meal_check;
 	pthread_mutex_t	simulation_mutex;
 	t_philo			*philos;
 }	t_data;
