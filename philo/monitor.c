@@ -13,7 +13,7 @@
 #include "philo.h"
 
 /** Checks if simulation should end, uses simulation mutex */
-int	end_simulation(t_data *data)
+static int	end_simulation(t_data *data)
 {
 	pthread_mutex_lock(&data->simulation_mutex);
 	if (data->end_simulation == TRUE)
@@ -26,7 +26,7 @@ int	end_simulation(t_data *data)
 }
 
 /** Monitors for philosopher deaths, uses state mutexes and simulation mutex */
-void	check_philosopher_death(t_data *data)
+static void	check_philosopher_death(t_data *data)
 {
 	size_t		i;
 	size_t		current_time;
@@ -57,7 +57,7 @@ void	check_philosopher_death(t_data *data)
 
 /** Checks if all philosophers ate enough, uses state mutexes 
  * and simulation mutex */
-void	check_if_eaten_enough(t_data *data)
+static void	check_if_eaten_enough(t_data *data)
 {
 	size_t	i;
 
