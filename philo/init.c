@@ -43,6 +43,7 @@ void	init_data(t_data *data, int argc, char **argv)
 	else
 		data->must_eat = 0;
 	data->start_time = get_time();
+	data->start_simulation = FALSE;
 	data->end_simulation = FALSE;
 	data->philos = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->philos)

@@ -32,6 +32,9 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	while(philo->data->start_simulation != TRUE &&
+		philo->data->end_simulation != TRUE)
+		usleep(500);
 	if (philo->data->num_philos == 1)
 		return (single_philo_routine(philo));
 	if (philo->id % 2 == 0)

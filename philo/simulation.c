@@ -56,6 +56,7 @@ void	start_simulation(t_data *data)
 	created = create_threads(data);
 	if (created != data->num_philos)
 	{
+		data->end_simulation = TRUE;
 		join_threads(data, created);
 		return ;
 	}
@@ -64,6 +65,7 @@ void	start_simulation(t_data *data)
 		join_threads(data, data->num_philos);
 		return ;
 	}
+	data->start_simulation = TRUE;
 	monitor_simulation(data);
 	join_threads(data, created);
 }

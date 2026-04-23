@@ -64,6 +64,7 @@ typedef struct s_data
 	size_t			t_sleep;
 	size_t			must_eat;
 	long long		start_time;
+	int				start_simulation;
 	int				end_simulation;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
