@@ -63,5 +63,10 @@ void	philo_think(t_philo *philo)
 {
 	print_status(philo, THINK_MSG);
 	if (philo->data->num_philos % 2 == 1)
-		my_msleep(philo->data->t_eat);
+	{
+		if (philo->data->t_eat < philo->data->t_sleep)
+			my_msleep(philo->data->t_eat);
+		else
+			my_msleep(philo->data->t_sleep);
+	}
 }
