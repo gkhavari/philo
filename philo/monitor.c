@@ -21,8 +21,8 @@ static void	check_philosopher_death(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
-		current_time = get_time();
 		pthread_mutex_lock(&data->philos[i].state_mutex);
+		current_time = get_time();
 		if (get_end_simulation(data) == TRUE)
 		{
 			pthread_mutex_unlock(&data->philos[i].state_mutex);
@@ -70,6 +70,17 @@ static void	check_if_eaten_enough(t_data *data)
 /** Runs monitoring loop, calls death and meal checks */
 void	monitor_simulation(t_data *data)
 {
+	while (get_end_simulation(data) == FALSE)
+	{
+		pthread_mutex_lock(&data->simulation_mutex);
+		if (data->ready_philos == data->num_philos)
+		{
+			pthread_mutex_unlock(&data->simulation_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&data->simulation_mutex);
+		usleep(100);
+	}
 	while (1)
 	{
 		check_if_eaten_enough(data);

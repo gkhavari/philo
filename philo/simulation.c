@@ -51,8 +51,8 @@ static void	join_threads(t_data *data, size_t created)
 void	start_simulation(t_data *data)
 {
 	size_t	created;
+	size_t	i;
 
-	data->start_time = get_time();
 	created = create_threads(data);
 	if (created != data->num_philos)
 	{
@@ -60,13 +60,17 @@ void	start_simulation(t_data *data)
 		join_threads(data, created);
 		return ;
 	}
-	if (data->num_philos == 1)
+	data->start_time = get_time();
+	i = 0;
+	while (i < data->num_philos)
 	{
-		set_start_simulation(data, TRUE);
-		join_threads(data, data->num_philos);
-		return ;
+		pthread_mutex_lock(&data->philos[i].state_mutex);
+		data->philos[i].last_meal = data->start_time;
+		pthread_mutex_unlock(&data->philos[i].state_mutex);
+		i++;
 	}
 	set_start_simulation(data, TRUE);
-	monitor_simulation(data);
+	if (data->num_philos != 1)
+		monitor_simulation(data);
 	join_threads(data, created);
 }

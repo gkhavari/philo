@@ -35,10 +35,16 @@ void	*philo_routine(void *arg)
 	while (get_start_simulation(philo->data) != TRUE
 		&& get_end_simulation(philo->data) != TRUE)
 		usleep(500);
+	pthread_mutex_lock(&philo->state_mutex);
+	philo->last_meal = philo->data->start_time;
+	pthread_mutex_unlock(&philo->state_mutex);
+	pthread_mutex_lock(&philo->data->simulation_mutex);
+	philo->data->ready_philos += 1;
+	pthread_mutex_unlock(&philo->data->simulation_mutex);
 	if (philo->data->num_philos == 1)
 		return (single_philo_routine(philo));
 	if (philo->id % 2 == 0)
-		usleep(100);
+		my_msleep_stop(philo->data, philo->data->t_eat / 2);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->data->simulation_mutex);

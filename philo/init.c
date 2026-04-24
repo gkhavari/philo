@@ -42,9 +42,10 @@ void	init_data(t_data *data, int argc, char **argv)
 		data->must_eat = (size_t)ft_atoi_simple(argv[5]);
 	else
 		data->must_eat = 0;
-	data->start_time = get_time();
+//	data->start_time = get_time();
 	data->start_simulation = FALSE;
 	data->end_simulation = FALSE;
+	data->ready_philos = 0;
 	data->philos = malloc(sizeof(t_philo) * data->num_philos);
 	if (!data->philos)
 		return ;
@@ -64,7 +65,7 @@ void	init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].left_fork = i;
 		data->philos[i].right_fork = (i + 1) % data->num_philos;
-		data->philos[i].last_meal = data->start_time;
+		data->philos[i].last_meal = 0;
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].data = data;
 		i++;
