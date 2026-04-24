@@ -57,16 +57,15 @@ void	philo_sleep(t_philo *philo)
 	my_msleep_stop(philo->data, philo->data->t_sleep);
 }
 
-/** Simulates thinking, prints think status, sleeps extra for odd philosopher 
- * count */
+/** Simulates thinking, prints think status, sleeps to balance odd philosopher 
+ * cycles: (t_eat + t_sleep) / 2 for odd counts */
 void	philo_think(t_philo *philo)
 {
 	print_status(philo, THINK_MSG);
 	if (philo->data->num_philos % 2 == 1)
 	{
-		if (philo->data->t_eat < philo->data->t_sleep)
-			my_msleep_stop(philo->data, philo->data->t_eat);
-		else
-			my_msleep_stop(philo->data, philo->data->t_sleep);
+		size_t	think_sleep;
+		think_sleep = (philo->data->t_eat + philo->data->t_sleep) / 2;
+		my_msleep_stop(philo->data, think_sleep);
 	}
 }

@@ -42,7 +42,6 @@ void	init_data(t_data *data, int argc, char **argv)
 		data->must_eat = (size_t)ft_atoi_simple(argv[5]);
 	else
 		data->must_eat = 0;
-//	data->start_time = get_time();
 	data->start_simulation = FALSE;
 	data->end_simulation = FALSE;
 	data->ready_philos = 0;

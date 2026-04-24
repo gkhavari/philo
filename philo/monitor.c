@@ -67,7 +67,8 @@ static void	check_if_eaten_enough(t_data *data)
 	}
 }
 
-/** Runs monitoring loop, calls death and meal checks */
+/** Waits for all philosophers to confirm startup (ready_philos == num_philos),
+ * then runs monitoring loop checking deaths and meal counts */
 void	monitor_simulation(t_data *data)
 {
 	while (get_end_simulation(data) == FALSE)

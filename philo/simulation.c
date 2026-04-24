@@ -24,9 +24,7 @@ static size_t	create_threads(t_data *data)
 		if (pthread_create(&data->philos[created].thread, NULL,
 				philo_routine, &data->philos[created]) != 0)
 		{
-			pthread_mutex_lock(&data->simulation_mutex);
-			data->end_simulation = TRUE;
-			pthread_mutex_unlock(&data->simulation_mutex);
+			set_end_simulation(data, TRUE);
 			break ;
 		}
 		created++;
@@ -47,7 +45,8 @@ static void	join_threads(t_data *data, size_t created)
 	}
 }
 
-/** Starts the simulation, creates and joins threads, calls monitoring */
+/** Starts the simulation: creates threads, sets start_time, resets all philosophers' 
+ * last_meal to actual start time, signals start, runs monitor, joins threads */
 void	start_simulation(t_data *data)
 {
 	size_t	created;
@@ -56,7 +55,7 @@ void	start_simulation(t_data *data)
 	created = create_threads(data);
 	if (created != data->num_philos)
 	{
-		data->end_simulation = TRUE;
+		set_end_simulation(data, TRUE);
 		join_threads(data, created);
 		return ;
 	}

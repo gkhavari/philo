@@ -25,8 +25,8 @@ static void	*single_philo_routine(t_philo *philo)
 	return (NULL);
 }
 
-/** Main philosopher thread routine, 
- * handles eating cycle with simulation mutex checks */
+/** Main philosopher thread routine: waits for start signal, sets initial meal time,
+ * increments ready count, staggers even philosophers, then cycles eat-sleep-think */
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -44,16 +44,17 @@ void	*philo_routine(void *arg)
 	if (philo->data->num_philos == 1)
 		return (single_philo_routine(philo));
 	if (philo->id % 2 == 0)
-		my_msleep_stop(philo->data, philo->data->t_eat / 2);
+	{
+		size_t	stagger;
+		stagger = (philo->data->t_eat + philo->data->t_sleep) / philo->data->num_philos;
+		my_msleep_stop(philo->data, stagger);
+	}
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->simulation_mutex);
-		if (philo->data->end_simulation == TRUE)
+		if (get_end_simulation(philo->data) == TRUE)
 		{
-			pthread_mutex_unlock(&philo->data->simulation_mutex);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->data->simulation_mutex);
 		philo_take_forks(philo);
 		philo_eat(philo);
 		philo_return_forks(philo);
