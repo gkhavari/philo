@@ -61,10 +61,11 @@ void	philo_sleep(t_philo *philo)
  * cycles: (t_eat + t_sleep) / 2 for odd counts */
 void	philo_think(t_philo *philo)
 {
+	size_t	think_sleep;
+
 	print_status(philo, THINK_MSG);
 	if (philo->data->num_philos % 2 == 1)
 	{
-		size_t	think_sleep;
 		think_sleep = (philo->data->t_eat + philo->data->t_sleep) / 2;
 		my_msleep_stop(philo->data, think_sleep);
 	}

@@ -45,8 +45,9 @@ static void	join_threads(t_data *data, size_t created)
 	}
 }
 
-/** Starts the simulation: creates threads, sets start_time, resets all philosophers' 
- * last_meal to actual start time, signals start, runs monitor, joins threads */
+/** Starts the simulation: creates threads, sets start_time, 
+ * resets all philosophers' last_meal to actual start time, 
+ * signals start, runs monitor, joins threads */
 void	start_simulation(t_data *data)
 {
 	size_t	created;

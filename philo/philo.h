@@ -65,7 +65,9 @@ typedef struct s_data
 	size_t			must_eat;
 	long long		start_time;
 	int				start_simulation;
-	int				end_simulation;	size_t		ready_philos;	pthread_mutex_t	*forks;
+	int				end_simulation;
+	size_t			ready_philos;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	simulation_mutex;
 	t_philo			*philos;

@@ -56,7 +56,8 @@ void	print_status(t_philo *philo, char *msg)
 
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->print_mutex);
-	if (get_end_simulation(philo->data) == FALSE || ft_strcmp(msg, DIE_MSG) == 0)
+	if (get_end_simulation(philo->data) == FALSE
+		|| ft_strcmp(msg, DIE_MSG) == 0)
 		printf("%zu %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
