@@ -62,10 +62,11 @@ void	start_simulation(t_data *data)
 	}
 	if (data->num_philos == 1)
 	{
+		set_start_simulation(data, TRUE);
 		join_threads(data, data->num_philos);
 		return ;
 	}
-	data->start_simulation = TRUE;
+	set_start_simulation(data, TRUE);
 	monitor_simulation(data);
 	join_threads(data, created);
 }

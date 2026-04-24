@@ -7,6 +7,7 @@ SRCS    =	main.c \
 			actions.c \
 			routines.c \
 			monitor.c \
+			monitor_utils.c \
 			free.c \
 			utils.c \
 			utils_input_check.c

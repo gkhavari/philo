@@ -40,7 +40,7 @@ void	my_msleep_stop(t_data *data, long milliseconds)
 	long	start;
 
 	start = get_time();
-	while (!end_simulation(data))
+	while (get_end_simulation(data) == FALSE)
 	{
 		if (get_time() - start >= milliseconds)
 			break ;

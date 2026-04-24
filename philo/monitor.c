@@ -12,19 +12,6 @@
 
 #include "philo.h"
 
-/** Checks if simulation should end, uses simulation mutex */
-int	end_simulation(t_data *data)
-{
-	pthread_mutex_lock(&data->simulation_mutex);
-	if (data->end_simulation == TRUE)
-	{
-		pthread_mutex_unlock(&data->simulation_mutex);
-		return (TRUE);
-	}
-	pthread_mutex_unlock(&data->simulation_mutex);
-	return (FALSE);
-}
-
 /** Monitors for philosopher deaths, uses state mutexes and simulation mutex */
 static void	check_philosopher_death(t_data *data)
 {
@@ -36,7 +23,7 @@ static void	check_philosopher_death(t_data *data)
 	{
 		current_time = get_time();
 		pthread_mutex_lock(&data->philos[i].state_mutex);
-		if (end_simulation(data) == TRUE)
+		if (get_end_simulation(data) == TRUE)
 		{
 			pthread_mutex_unlock(&data->philos[i].state_mutex);
 			return ;
@@ -44,9 +31,7 @@ static void	check_philosopher_death(t_data *data)
 		if (current_time - data->philos[i].last_meal >= data->t_die)
 		{
 			print_status(&(data->philos[i]), DIE_MSG);
-			pthread_mutex_lock(&data->simulation_mutex);
-			data->end_simulation = TRUE;
-			pthread_mutex_unlock(&data->simulation_mutex);
+			set_end_simulation(data, TRUE);
 			pthread_mutex_unlock(&data->philos[i].state_mutex);
 			return ;
 		}
@@ -77,9 +62,7 @@ static void	check_if_eaten_enough(t_data *data)
 	}
 	if (i == data->num_philos)
 	{
-		pthread_mutex_lock(&data->simulation_mutex);
-		data->end_simulation = TRUE;
-		pthread_mutex_unlock(&data->simulation_mutex);
+		set_end_simulation(data, TRUE);
 		return ;
 	}
 }
@@ -91,7 +74,7 @@ void	monitor_simulation(t_data *data)
 	{
 		check_if_eaten_enough(data);
 		check_philosopher_death(data);
-		if (end_simulation(data) == TRUE)
+		if (get_end_simulation(data) == TRUE)
 			break ;
 	}
 }
