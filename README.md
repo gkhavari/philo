@@ -5,7 +5,7 @@
 ## Description
 This project implements the classic Dining Philosophers problem, a fundamental synchronization problem in computer science introduced by Edsger W. Dijkstra. The goal is to simulate a group of philosophers who must alternate between thinking and eating, sharing a limited number of forks. The challenge lies in preventing deadlock (where all philosophers hold one fork and wait indefinitely) and starvation (where some philosophers never get to eat).
 
-The implementation is written in C and uses POSIX threads (pthreads) for concurrency and mutexes for synchronization. Each philosopher is represented by a thread, and forks are protected by mutexes to ensure mutual exclusion. The program monitors the philosophers' states to detect death from starvation and manages the simulation lifecycle.
+The implementation is written in C and uses POSIX threads (pthreads) for concurrency and mutexes for synchronization. Each philosopher is represented by a thread, and forks are protected by mutexes to ensure mutual exclusion. The program monitors the philosophers' states to detect death from starvation and manages the simulation lifecycle. The simulation stops once a philosopher dies or when all philosophers have eaten the required number of times (if the `times_must_eat` parameter is specified).
 
 ## Key Features
 - **Deadlock Prevention**: Forks are acquired in a consistent order (lower index first) to avoid circular waiting.
@@ -52,13 +52,11 @@ This adds the `-g` flag to the compiler options, allowing you to step through th
 ## Edge Cases
 - **Single Philosopher**: With only one philosopher, they can only pick up one fork and will inevitably die, as they cannot eat without two forks.
 - **High Number of Philosophers**: The program handles up to approx. 200 philosophers efficiently.
-- **Minimum Times to Eat**: When specified, the simulation stops once all philosophers have eaten the required number of times.
 
 ## Resources
-- **Dijkstra, E. W. (1965). Cooperating sequential processes.** The original paper that introduced the Dining Philosophers problem as an example of synchronization issues in concurrent programming.
 - **POSIX Threads Programming**: Official documentation for pthreads, available at [pubs.opengroup.org](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/pthread.h.html).
 - **Concurrency and Synchronization Tutorials**: Articles on mutexes, threads, and deadlock prevention, such as those on GeeksforGeeks or IBM Developer.
-- **42 School Curriculum**: This project is part of the 42 programming school curriculum, focusing on low-level programming and system concepts.
+- **Peers at the 42 School Vienna**: This project is part of the 42 programming school curriculum, focusing on low-level programming and system concepts.
 
 ### AI Usage
 ChatGPT was used throughout the development process for:

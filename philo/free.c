@@ -46,11 +46,10 @@ void	free_all(t_data *data)
 {
 	free_forks(data);
 	if (data->philos)
-		destroy_philo_mutex(data);
-	pthread_mutex_destroy(&data->print_mutex);
-	pthread_mutex_destroy(&data->simulation_mutex);
-	if (data->philos)
 	{
+		destroy_philo_mutex(data);
+		pthread_mutex_destroy(&data->print_mutex);
+		pthread_mutex_destroy(&data->simulation_mutex);
 		free(data->philos);
 		data->philos = NULL;
 	}

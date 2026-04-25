@@ -28,9 +28,7 @@ void	my_msleep(long milliseconds)
 
 	start = get_time();
 	while (get_time() - start < milliseconds)
-	{
 		usleep(500);
-	}
 }
 
 /** Sleeps for specified milliseconds using usleep, but only as long as 
@@ -40,12 +38,9 @@ void	my_msleep_stop(t_data *data, long milliseconds)
 	long	start;
 
 	start = get_time();
-	while (get_end_simulation(data) == FALSE)
-	{
-		if (get_time() - start >= milliseconds)
-			break ;
+	while (get_end_simulation(data) == FALSE
+		&& get_time() - start < milliseconds)
 		usleep(500);
-	}
 }
 
 /** Prints philosopher status message, uses simulation and print mutexes 

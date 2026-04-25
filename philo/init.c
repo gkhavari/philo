@@ -53,6 +53,8 @@ void	init_data(t_data *data, int argc, char **argv)
 		return ;
 }
 
+/** Initializes each philosopher: sets ID, fork indices, meal tracking, 
+ * and data pointer */
 void	init_philos(t_data *data)
 {
 	size_t	i;
