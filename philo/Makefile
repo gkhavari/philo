@@ -15,7 +15,7 @@ SRCS    =	main.c \
 OBJS    = $(SRCS:.c=.o)
 
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -g
+CFLAGS  = -Wall -Wextra -Werror
 
 all: $(NAME)
 
