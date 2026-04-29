@@ -3,7 +3,7 @@
 # Philosophers
 
 ## Description
-This project implements the classic Dining Philosophers problem, a fundamental synchronization problem in computer science introduced by Edsger W. Dijkstra. The goal is to simulate a group of philosophers who must alternate between thinking and eating, sharing a limited number of forks. The challenge lies in preventing deadlock (where all philosophers hold one fork and wait indefinitely) and starvation (where some philosophers never get to eat).
+This project implements the classic Dining Philosophers problem, a fundamental synchronization problem in computer science introduced by Edsger W. Dijkstra. The goal is to simulate a group of philosophers who must alternate between thinking, sleeping and eating, sharing a limited number of forks. The challenge lies in preventing deadlock (where all philosophers hold one fork and wait indefinitely) and starvation (where some philosophers never get to eat).
 
 The implementation is written in C and uses POSIX threads (pthreads) for concurrency and mutexes for synchronization. Each philosopher is represented by a thread, and forks are protected by mutexes to ensure mutual exclusion. The program monitors the philosophers' states to detect death from starvation and manages the simulation lifecycle. The simulation stops once a philosopher dies or when all philosophers have eaten the required number of times (if the `times_must_eat` parameter is specified).
 
